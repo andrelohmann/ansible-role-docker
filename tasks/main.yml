@@ -16,10 +16,10 @@
     executable: /bin/bash
 
 - name: create all users
-  - user:
-      name: "{{ item }}"
-      groups: docker
-      append: yes
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
   with_items: "{{ docker_users }}"
 
 ...
