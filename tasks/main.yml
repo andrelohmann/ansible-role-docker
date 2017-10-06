@@ -1,0 +1,25 @@
+---
+
+- name: install packages
+  apt:
+    name: "{{item}}"
+    state: installed
+    default_release: "{{ _release }}"
+    dpkg_options: 'force-confnew,force-confdef'
+    autoremove: yes
+  with_items:
+  - curl
+
+- name: install docker
+  shell: "curl -sSL https://get.docker.com/ | sh"
+  args:
+    executable: /bin/bash
+
+- name: create all users
+  - user:
+      name: "{{ item }}"
+      groups: docker
+      append: yes
+  with_items: "{{ docker_users }}"
+
+...

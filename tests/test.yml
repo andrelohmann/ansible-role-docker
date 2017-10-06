@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  remote_user: root
+  vars:
+    accounts_users:
+    - name: test_user
+      uid: 4001
+      state: present
+      keys:
+      - key: ssh-rsa AAA...
+        state: present
+    docker_users:
+    - test_user
+
+  roles:
+    - andrelohmann.accounts
+    - ansible-role-docker
+...
