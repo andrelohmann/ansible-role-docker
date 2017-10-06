@@ -4,7 +4,6 @@
   apt:
     name: "{{item}}"
     state: installed
-    default_release: "{{ _release }}"
     dpkg_options: 'force-confnew,force-confdef'
     autoremove: yes
   with_items:
