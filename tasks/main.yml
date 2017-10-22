@@ -8,6 +8,7 @@
     autoremove: yes
   with_items:
   - curl
+  - python-pip
 
 - name: install docker
   shell: "curl -sSL https://get.docker.com/ | sh"
@@ -20,5 +21,10 @@
     groups: docker
     append: yes
   with_items: "{{ docker_users }}"
+
+- name: install docker-compose
+  pip:
+    name: docker-compose
+    state: latest
 
 ...
