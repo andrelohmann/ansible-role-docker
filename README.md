@@ -17,8 +17,6 @@ Create a list with all users that need to be added to the docker group
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: docker
       roles:
          - { role: andrelohmann.docker }
