@@ -1,33 +1,35 @@
 ---
 - name: remove distribution packages
   apt:
-    name: "{{item}}"
+    name: "{{ packages }}"
     state: absent
     dpkg_options: 'force-confnew,force-confdef'
     autoclean: yes
     autoremove: yes
     update_cache: yes
     cache_valid_time: 3600
-  with_items:
-  - docker
-  - docker-engine
-  - docker.io
+  vars:
+    packages:
+    - docker
+    - docker-engine
+    - docker.io
 
 - name: install packages
   apt:
-    name: "{{item}}"
+    name: "{{ packages }}"
     state: latest
     dpkg_options: 'force-confnew,force-confdef'
     autoclean: yes
     autoremove: yes
     update_cache: yes
     cache_valid_time: 3600
-  with_items:
-  - curl
-  - python-pip
-  - apt-transport-https
-  - ca-certificates
-  - software-properties-common
+  vars:
+    packages:
+    - curl
+    - python-pip
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
 
 - name: Add Docker key
   apt_key:
@@ -42,15 +44,13 @@
 
 - name: install docker
   apt:
-    name: "{{item}}"
+    name: docker-ce
     state: latest
     dpkg_options: 'force-confnew,force-confdef'
     autoclean: yes
     autoremove: yes
     update_cache: yes
     cache_valid_time: 3600
-  with_items:
-  - docker-ce
 
 - name: create all users
   user:
