@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: docker
   author: andrelohmann
   description: ansible galaxy role to deploy docker
   company: smartformer UG
