@@ -26,7 +26,7 @@
   vars:
     packages:
     - curl
-    - python-pip
+    - python3-pip
     - apt-transport-https
     - ca-certificates
     - software-properties-common
@@ -60,7 +60,17 @@
 
 - name: install docker-compose
   pip:
-    name: docker-compose
-    state: latest
+    name: "{{ required_python_packages }}"
+    extra_args: --upgrade
+    executable: pip3
+  vars:
+    required_python_packages:
+    pip:
+      name: "{{ required_python_packages }}"
+      extra_args: --upgrade
+      executable: pip3
+    vars:
+      required_python_packages:
+      - docker-compose
 
 ...
