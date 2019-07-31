@@ -23,7 +23,9 @@
     - yum-utils
     - device-mapper-persistent-data
     - lvm2
-    - python2-pip
+    - python-pip
+    - python-devel
+    - openssl-devel
 
 - name: Add Docker key
   rpm_key:
@@ -54,6 +56,12 @@
     groups: docker
     append: yes
   with_items: "{{ docker_users }}"
+
+- name: start docker daemon
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
 
 - name: install docker-compose
   pip:
