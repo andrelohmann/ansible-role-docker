@@ -19,7 +19,7 @@ Example Playbook
 
     - hosts: docker
       roles:
-         - { role: andrelohmann.docker }
+         - andrelohmann.docker
 
 License
 -------
