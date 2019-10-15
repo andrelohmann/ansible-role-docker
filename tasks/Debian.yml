@@ -27,6 +27,10 @@
     packages:
     - curl
     - python3-pip
+    - python3-dev
+    - libffi-dev
+    - build-essential
+    - libssl-dev
     - apt-transport-https
     - ca-certificates
     - software-properties-common
