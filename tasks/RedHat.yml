@@ -23,9 +23,12 @@
     - yum-utils
     - device-mapper-persistent-data
     - lvm2
-    - python-pip
-    - python-devel
+    - python3-pip
+    - python3-devel
+    - python3-setuptools
     - openssl-devel
+    - libgcc
+    - libffi-devel
 
 - name: Add Docker key
   rpm_key:
@@ -67,7 +70,7 @@
   pip:
     name: "{{ required_python_packages }}"
     extra_args: --upgrade
-    executable: pip
+    executable: pip3
   vars:
     required_python_packages:
     - docker-compose
