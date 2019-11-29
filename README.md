@@ -13,6 +13,7 @@ Create a list with all users that need to be added to the docker group
     docker_users:
     - __USERNAME__
     - __OTHER_USERNAME__
+    docker_install_compose: True
 
 Example Playbook
 ----------------
