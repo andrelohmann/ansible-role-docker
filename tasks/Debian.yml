@@ -59,34 +59,35 @@
     append: yes
   with_items: "{{ docker_users }}"
 
-- name: install docker-compose dependencies
-  apt:
-    name: "{{ packages }}"
-    state: latest
-    dpkg_options: 'force-confnew,force-confdef'
-    autoclean: yes
-    autoremove: yes
-    update_cache: yes
-    cache_valid_time: 3600
-  vars:
-    packages:
-    - python3-pip
-    - python3-dev
-    - libffi-dev
-    - build-essential
-    - libssl-dev
-    - ca-certificates
-    - software-properties-common
-  when: docker_install_compose == True
 
-- name: install docker-compose
-  pip:
-    name: "{{ required_python_packages }}"
-    extra_args: --upgrade
-    executable: pip3
-  vars:
-    required_python_packages:
-    - docker-compose
+
+- name: Install Docker Compose
+  block:
+
+  - name: install docker-compose dependencies
+    apt:
+      name: "{{ packages }}"
+      state: latest
+      dpkg_options: 'force-confnew,force-confdef'
+      autoclean: yes
+      autoremove: yes
+      update_cache: yes
+    vars:
+      packages:
+      - curl
+
+  - name: fetch lates docker-compose version
+    shell: curl -s -o /dev/null -I -w "%{redirect_url}\n" https://github.com/docker/compose/releases/latest | grep -oP "[0-9]+(\.[0-9]+)+$"
+    args:
+      executable: /bin/bash
+    register: docker_compose_version
+
+  - name: Install Docker Compose (if configured).
+    get_url:
+      url: https://github.com/docker/compose/releases/download/{{ docker_compose_version.stdout }}/docker-compose-Linux-x86_64
+      dest: /usr/bin/docker-compose
+      mode: 0755
+
   when: docker_install_compose == True
 
 ...

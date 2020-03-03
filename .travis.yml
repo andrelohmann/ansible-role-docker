@@ -37,6 +37,7 @@ script:
   #  || (echo 'Idempotence test: fail' && exit 1)
   # get the uid of test_user
   - "docker info"
+  - "docker-compose --version"
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
