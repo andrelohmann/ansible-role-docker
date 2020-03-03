@@ -24,12 +24,12 @@
     - device-mapper-persistent-data
     - lvm2
 
-- name: Add Docker key
+- name: add Docker key
   rpm_key:
     key: https://download.docker.com/linux/centos/gpg
     state: present
 
-- name: Install docker repo
+- name: install docker repo
   yum_repository:
     name: docker-ce
     description: Docker-ce YUM repo
@@ -60,7 +60,7 @@
     state: started
     enabled: yes
 
-- name: Install Docker Compose
+- name: install Docker Compose
   block:
 
   - name: install docker-compose dependencies
@@ -71,13 +71,13 @@
       packages:
       - curl
 
-  - name: fetch lates docker-compose version
+  - name: fetch latest docker-compose version
     shell: curl -s -o /dev/null -I -w "%{redirect_url}\n" https://github.com/docker/compose/releases/latest | grep -oP "[0-9]+(\.[0-9]+)+$"
     args:
       executable: /bin/bash
     register: docker_compose_version
 
-  - name: Install Docker Compose (if configured).
+  - name: install Docker Compose
     get_url:
       url: https://github.com/docker/compose/releases/download/{{ docker_compose_version.stdout }}/docker-compose-Linux-x86_64
       dest: /usr/bin/docker-compose
