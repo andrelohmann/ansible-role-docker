@@ -71,17 +71,5 @@
       packages:
       - curl
 
-  - name: fetch latest docker-compose version
-    shell: curl -s -o /dev/null -I -w "%{redirect_url}\n" https://github.com/docker/compose/releases/latest | grep -oP "[0-9]+(\.[0-9]+)+$"
-    args:
-      executable: /bin/bash
-    register: docker_compose_version
-
-  - name: install Docker Compose
-    get_url:
-      url: https://github.com/docker/compose/releases/download/{{ docker_compose_version.stdout }}/docker-compose-Linux-x86_64
-      dest: /usr/bin/docker-compose
-      mode: 0755
-
   when: docker_install_compose == True
 ...

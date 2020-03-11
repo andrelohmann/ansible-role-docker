@@ -10,4 +10,54 @@
   when:
   - ansible_facts['os_family'] == "Debian"
 
+- name: install Docker Compose
+  block:
+
+  - name: Remove previous docker-compose
+    file:
+      path: /usr/local/bin/docker-compose
+      state: absent
+
+  - name: Remove previous docker-compose symlink
+    file:
+      path: /usr/bin/docker-compose
+      state: absent
+
+  - name: Remove previous docker-compose bash_completion
+    file:
+      path: /etc/bash_completion.d/docker-compose
+      state: absent
+
+  - name: fetch lates docker-compose version
+    shell: curl -s -o /dev/null -I -w "%{redirect_url}\n" https://github.com/docker/compose/releases/latest | grep -oP "[0-9]+(\.[0-9]+)+$"
+    args:
+      executable: /bin/bash
+    register: docker_compose_version
+
+  - name: install docker-compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/{{ docker_compose_version.stdout }}/docker-compose-Linux-x86_64
+      owner: root
+      group: root
+      dest: /usr/local/bin/docker-compose
+      mode: 0755
+
+  - name: create docker-compose symlink
+    file:
+      src: /usr/local/bin/docker-compose
+      dest: /usr/bin/docker-compose
+      owner: root
+      group: root
+      state: link
+
+  - name: Download docker-compose
+    get_url:
+      url: "https://raw.githubusercontent.com/docker/compose/{{ docker_compose_version.stdout }}/contrib/completion/bash/docker-compose"
+      dest: /etc/bash_completion.d/docker-compose
+      owner: root
+      group: root
+      mode: '0600'
+
+  when: docker_install_compose == True
+
 ...
