@@ -59,17 +59,4 @@
     name: docker
     state: started
     enabled: yes
-
-- name: install Docker Compose
-  block:
-
-  - name: install docker-compose dependencies
-    yum:
-      name: "{{ packages }}"
-      state: latest
-    vars:
-      packages:
-      - curl
-
-  when: docker_install_compose == True
 ...

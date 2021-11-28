@@ -62,21 +62,4 @@
     groups: docker
     append: yes
   with_items: "{{ docker_users }}"
-
-- name: install Docker Compose
-  block:
-
-  - name: install docker-compose dependencies
-    apt:
-      name: "{{ packages }}"
-      state: latest
-      dpkg_options: 'force-confnew,force-confdef'
-      autoclean: yes
-      autoremove: yes
-      update_cache: yes
-    vars:
-      packages:
-      - curl
-
-  when: docker_install_compose == True
 ...

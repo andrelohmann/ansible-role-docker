@@ -1,4 +1,3 @@
 ---
 docker_users: []
-docker_install_compose: True
 ...

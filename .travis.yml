@@ -3,7 +3,7 @@ language: python
 python: "3.6"
 
 sudo: required
-dist: xenial
+dist: focal
 
 # Install ansible
 addons:
