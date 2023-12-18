@@ -1,0 +1,22 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+  - name: Get docker version
+    ansible.builtin.shell: docker --version
+    register: docker_version
+
+  - name: Dump docker version
+    ansible.builtin.debug:
+      var: docker_version
+
+  - name: Assert docker version is set
+    ansible.builtin.assert:
+      that:
+      - "'Docker version' in docker_version.stdout"
+      - "', build' in docker_version.stdout"
+...

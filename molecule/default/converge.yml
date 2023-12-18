@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    docker_users:
+    - ubuntu
+  tasks:
+  - name: "Include andrelohmann.docker"
+    include_role:
+      name: "andrelohmann.docker"
+...
