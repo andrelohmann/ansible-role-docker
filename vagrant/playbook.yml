@@ -9,7 +9,7 @@
 
   roles:
   - andrelohmann.root_colored_prompt
-  #- ansible-role-docker
+  # - ansible-role-docker
 
   tasks: []
 ...
