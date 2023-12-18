@@ -3,7 +3,7 @@
   hosts: all
   vars:
     docker_users:
-    - vagrant
+    - ubuntu
   tasks:
   - name: "Include andrelohmann.docker"
     include_role:

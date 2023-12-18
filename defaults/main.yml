@@ -1,4 +1,7 @@
 ---
 docker_users: []
-docker_install_compose: True
+docker_deb_architecture: {
+  "aarch64": "arm64",
+  "x86_64": "amd64"
+}
 ...

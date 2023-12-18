@@ -6,21 +6,17 @@
   gather_facts: false
   tasks:
 
-  - name: postgresql restart
-    systemd:
-      name: postgresql
-      state: restarted
-
   - name: Get Service Status
-    ansible.builtin.systemd:
-      name: "postgresql.service"
-    register: pg_service_status
+    ansible.builtin.shell: docker --version
+    register: docker_version
 
-  # - name: dump postgresql service
-  #   ansible.builtin.debug:
-  #     var: pg_service_status
+  - name: dump postgresql service
+    ansible.builtin.debug:
+      var: docker_version
 
   - name: Assert postgresql.service is enabled
     ansible.builtin.assert:
-      that: pg_service_status.status.ActiveState == "active"
+      that:
+      - "'Docker version' in docker_version.stdout"
+      - "', build' in docker_version.stdout"
 ...
