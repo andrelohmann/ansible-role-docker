@@ -6,15 +6,15 @@
   gather_facts: false
   tasks:
 
-  - name: Get Service Status
+  - name: Get docker version
     ansible.builtin.shell: docker --version
     register: docker_version
 
-  - name: dump postgresql service
+  - name: Dump docker version
     ansible.builtin.debug:
       var: docker_version
 
-  - name: Assert postgresql.service is enabled
+  - name: Assert docker version is set
     ansible.builtin.assert:
       that:
       - "'Docker version' in docker_version.stdout"
