@@ -1,0 +1,6 @@
+---
+
+- name: Restart conditionally
+  ansible.builtin.include_tasks: restart.yml
+
+...

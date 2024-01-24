@@ -9,7 +9,9 @@
 
   roles:
   - andrelohmann.root_colored_prompt
-  # - ansible-role-docker
+  - ansible-role-docker
 
-  tasks: []
+  tasks:
+  - name: Docker | Hello world
+    ansible.builtin.command: docker run hello-world
 ...
