@@ -1,0 +1,23 @@
+---
+
+- name: Systemctl | Stop docker.socket
+  ansible.builtin.systemd:
+    name: docker.socket
+    state: stopped
+
+- name: Systemctl | Stop docker.service
+  ansible.builtin.systemd:
+    name: docker.service
+    state: stopped
+
+- name: Systemctl | Start docker.socket
+  ansible.builtin.systemd:
+    name: docker.socket
+    state: started
+
+- name: Systemctl | Start docker.service
+  ansible.builtin.systemd:
+    name: docker.service
+    state: started
+
+...
