@@ -4,35 +4,36 @@
   ansible.builtin.systemd:
     name: docker.socket
     state: stopped
-
-# Pause for 15 seconds to let unicorn restart
-- name: Pause | Wait for 15 seconds
-  ansible.builtin.pause:
-    seconds: 15
+  register: result
+  retries: 3
+  delay: 10
+  until: result is not failed
 
 - name: Systemctl | Stop docker.service
   ansible.builtin.systemd:
     name: docker.service
     state: stopped
-
-# Pause for 15 seconds to let unicorn restart
-- name: Pause | Wait for 15 seconds
-  ansible.builtin.pause:
-    seconds: 15
+  register: result
+  retries: 3
+  delay: 10
+  until: result is not failed
 
 - name: Systemctl | Start docker.socket
   ansible.builtin.systemd:
     name: docker.socket
     state: started
-
-# Pause for 15 seconds to let unicorn restart
-- name: Pause | Wait for 15 seconds
-  ansible.builtin.pause:
-    seconds: 15
+  register: result
+  retries: 3
+  delay: 10
+  until: result is not failed
 
 - name: Systemctl | Start docker.service
   ansible.builtin.systemd:
     name: docker.service
     state: started
+  register: result
+  retries: 3
+  delay: 10
+  until: result is not failed
 
 ...
