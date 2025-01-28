@@ -2,12 +2,12 @@
 - name: Converge
   hosts: all
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   vars:
     docker_users:
     - ubuntu
   tasks:
-  - name: "Include andrelohmann.docker"
-    include_role:
+  - name: Include andrelohmann.docker
+    ansible.builtin.include_role:
       name: "andrelohmann.docker"
 ...
