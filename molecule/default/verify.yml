@@ -7,8 +7,9 @@
   tasks:
 
   - name: Get docker version
-    ansible.builtin.shell: docker --version
+    ansible.builtin.command: docker --version
     register: docker_version
+    changed_when: false
 
   - name: Dump docker version
     ansible.builtin.debug:
