@@ -11,9 +11,13 @@
     purge: true
   vars:
     packages:
-    - docker
-    - docker-engine
     - docker.io
+    - docker-compose
+    - docker-compose-v2
+    - docker-doc
+    - podman-docker
+    - containerd
+    - runc
   notify: Restart conditionally
 
 - name: Apt | Install packages
@@ -33,16 +37,21 @@
 
 - name: Apt | Add docker key
   ansible.builtin.get_url:
-    url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
-    dest: /etc/apt/trusted.gpg.d/docker.asc
+    url: "https://download.docker.com/linux/{{ ansible_facts[\"distribution\"] | lower }}/gpg"
+    dest: /etc/apt/keyrings/docker.asc
     mode: '0644'
     force: true
 
 - name: Apt | Install docker repo
-  ansible.builtin.apt_repository:
-    repo: "deb [arch={{ [ansible_architecture] | map('extract', docker_deb_architecture) | first }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
-    state: present
-    filename: docker-ce
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/docker.sources
+    content: |
+      Types: deb
+      URIs: https://download.docker.com/linux/{{ ansible_facts["distribution"] | lower }}
+      Suites: {{ ansible_facts["distribution_release"] }}
+      Components: stable
+      Signed-By: /etc/apt/keyrings/docker.asc
+    mode: '0644'
 
 - name: Apt | Install docker
   ansible.builtin.apt:
